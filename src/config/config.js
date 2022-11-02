@@ -23,23 +23,14 @@ const listConfig = {
         value: "",
         color: "#87e8de",
     },
-    city: {
-        value: "北京",
-        color: "#9CA2A0",
-    },
     weather: {
         value: "",
         color: "#7CD47D",
     },
-    temperature: {
-        value: "",
-        color: "#CBA476",
-    },
-    loveDate: {
+    days: {
         value: "",
         color: "#ff9c6e",
     },
-
     txt: {
         value: "",
         color: "#3C4244",
@@ -52,6 +43,6 @@ module.exports = {
     START_DAY,
     SEND_HOUR,
     SEND_MINUTE,
-    CHP_URL,
+    QUOTE_URL,
     WEATHER_URL,
 };

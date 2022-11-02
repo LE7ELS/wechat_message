@@ -52,7 +52,22 @@ const getWeatherData = () => {
     return p;
 };
 
+const getWeatherIcon = (text) => {
+    let weatherIcon = "🌤️";
+    let iconList = ["☁️", "⛅️", "☃️", "⛈️", "🏜️", "🏜️", "🌫️", "🌫️", "🍃", "🌧️", "☀️"];
+    let weatherType = ["阴", "云", "雪", "雷", "沙", "尘", "雾", "霾", "风", "雨", "晴"];
+    for (let index = 0; index < weatherType.length; index++) {
+        const item = weatherType[index];
+        if (text.search(item) >= 0) {
+            weatherIcon = iconList[index];
+            break;
+        }
+    }
+    return weatherIcon;
+};
+
 module.exports = {
     getWeatherTips,
     getWeatherData,
+    getWeatherIcon,
 };

@@ -1,7 +1,7 @@
 var axios = require("axios");
 const { listConfig, START_DAY } = require("../../src/config/config");
 const { getContent } = require("./getContent");
-const { getWeatherTips, getWeatherData } = require("./getWeatherContent");
+const { getWeatherTips, getWeatherData, getWeatherIcon } = require("./getWeatherContent");
 const week = {
     1: "一",
     2: "二",
@@ -15,16 +15,19 @@ const getAllDataAndSend = (param) => {
     let today = new Date();
     let initDay = new Date(START_DAY);
     let lastDay = Math.floor((today - initDay) / 1000 / 60 / 60 / 24);
-    let todaystr = today.getFullYear() + " / " + (today.getMonth() + 1) + " / " + today.getDate();
-
+    let todaystr = today.getFullYear() + "年" + (today.getMonth() + 1) + "月" + today.getDate() + "日";
+    // 纪念日
+    listConfig.days.value = `❤和臭宝在一起已经${lastDay}天啦！`;
     const weekDay = today.getDay();
-    listConfig.loveDate.value = lastDay;
-    listConfig.nowDate.value = `今天是${todaystr}，星期${week[weekDay]}`;
+    listConfig.nowDate.value = `今天是${todaystr} 星期${week[weekDay]}`;
+
     return Promise.all([getContent(), getWeatherTips(), getWeatherData()]).then((data) => {
-        listConfig.txt.value = data[0].data.text;
-        const { WeatherImgUrl, WeatherText, Temperature, WindDirection } = data[2];
-        listConfig.weather.value = `${WeatherText}，${WindDirection}，${data[1]}`;
-        listConfig.temperature.value = Temperature;
+        // 天气
+        const { WeatherText, Temperature, WindDirection } = data[2];
+        let icon = getWeatherIcon(WeatherText);
+        listConfig.weather.value = `${icon}${WeatherText}，${WindDirection}，气温${Temperature.replace("/", "~")}\n🧥${data[1]}`;
+        // 语录
+        listConfig.txt.value = "✏️" + data[0].data.text;
         return sendMessage(param, listConfig);
     });
 };
