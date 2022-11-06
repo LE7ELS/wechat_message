@@ -21,12 +21,12 @@ async function start(userid) {
                 console.error("发送失败", res.data);
                 return;
             }
-            console.log (`发送给${userid} 成功-请在微信上查看对应消息`);
+            console.log(`发送给${userid} 成功-请在微信上查看对应消息`);
         })
         .catch((err) => console.error("发送失败", err));
 }
 // 手动设置定时器发送给多个用户
-start("oaZR-6VY41M9ySqRkyCRsjUwvuIo");
+start("oaZR-6az0Jeuhd9RL6VF08FhRdjU");
 setTimeout(() => {
-    start("oaZR-6az0Jeuhd9RL6VF08FhRdjU");
+    start("oaZR-6VY41M9ySqRkyCRsjUwvuIo");
 }, 5000);
