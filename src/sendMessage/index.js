@@ -1,5 +1,6 @@
 var axios = require("axios");
-var solarLunar = require("solarLunar");
+// var solarLunar = require("solarLunar");
+var solarLunar = require("../solarLunar");
 const { listConfig, DAYS } = require("../../src/config/config");
 const { getQuote, getDailyEnglish } = require("./getContent");
 const { getWeatherTips, getWeatherData, getWeatherIcon } = require("./getWeatherContent");
