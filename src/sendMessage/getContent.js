@@ -1,12 +1,21 @@
 var axios = require("axios");
-const { CHP_URL } = require("../config/config");
-const getContent = async () => {
+const { QUOTE_URL, ENGLISH_URL } = require("../config/config");
+
+const getQuote = async () => {
     let { data } = await axios({
-        url: CHP_URL,
+        url: QUOTE_URL,
+    });
+    return data.dataList[0];
+};
+// 金山词霸每日英文
+const getDailyEnglish = async () => {
+    let { data } = await axios({
+        url: ENGLISH_URL,
     });
     return data;
 };
 
 module.exports = {
-    getContent,
+    getQuote,
+    getDailyEnglish,
 };

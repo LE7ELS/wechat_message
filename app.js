@@ -1,8 +1,6 @@
-const { params, SEND_HOUR, SEND_MINUTE } = require("./src/config/config");
+const { params } = require("./src/config/config");
 const getToken = require("./src/getToken/index");
 const getAllDataAndSend = require("./src/sendMessage/index");
-
-const schedule = require("node-schedule"); //定时器任务库
 
 async function start() {
     let access_token;
@@ -26,15 +24,4 @@ async function start() {
         })
         .catch((err) => console.error("发送失败", err));
 }
-
-// node-schedule 定时任务处理
-// let rule = new schedule.RecurrenceRule();
-// rule.dayOfWeek = [0, new schedule.Range(1, 6)];
-// rule.hour = SEND_HOUR;
-// rule.minute = SEND_MINUTE;
-// console.log("message: 开始等待目标时刻...");
-// let j = schedule.scheduleJob(rule, function () {
-//   console.log("执行任务");
-//   start()
-// });
 start();
