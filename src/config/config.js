@@ -3,7 +3,7 @@ const params = {
     appid: "wxe6e8431df7080211",
     secret: "6ce5e2d439bb821dc5ba439c59a66b9f",
     // touser: "oaZR-6az0Jeuhd9RL6VF08FhRdjU",
-    template_id: "vCOcg2qgNf1Dp7F2iy8mENm7KVm0YS13dbUtM-9iRX8",
+    template_id: "clsVXcUq647NeCx9IWyf4C52pUlrbceXEfT0qNxeP7E",
 };
 
 // 纪念日
