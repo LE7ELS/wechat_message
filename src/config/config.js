@@ -2,7 +2,7 @@
 const params = {
     appid: "wxe6e8431df7080211",
     secret: "6ce5e2d439bb821dc5ba439c59a66b9f",
-    touser: "oaZR-6az0Jeuhd9RL6VF08FhRdjU",
+    // touser: "oaZR-6az0Jeuhd9RL6VF08FhRdjU",
     template_id: "vCOcg2qgNf1Dp7F2iy8mENm7KVm0YS13dbUtM-9iRX8",
 };
 
@@ -10,7 +10,8 @@ const params = {
 const DAYS = {
     meet: "2021/10/24",
     love: "2022/4/16",
-    bday: "1999/5/14", // 农历
+    bday1: "1999/5/14", // 农历
+    bday2: "1997/3/17", // 农历
 };
 // 每日文案（来自 ONE·一个）
 const QUOTE_URL = "https://apier.youngam.cn/essay/one";

@@ -18,8 +18,9 @@ const getAllDataAndSend = (param) => {
     let initLove = new Date(DAYS.love),
         loveDay = Math.floor((today - initLove) / 1000 / 60 / 60 / 24);
     listConfig.loveDay.value = `❤ 今天是我们在一起的第 ${loveDay} 天`;
-    let birthday = bdayCountdown(DAYS.bday);
-    listConfig.birthday.value = `🎂 距离臭宝生日还有 ${birthday} 天`;
+    let herBday = bdayCountdown(DAYS.bday1),
+        myBday = bdayCountdown(DAYS.bday2);
+    listConfig.birthday.value = `🎂 距离臭宝生日还有 ${herBday} 天\n🎂 距离JC生日还有 ${myBday} 天`;
 
     return Promise.all([getQuote(), getDailyEnglish(), getWeatherTips(), getWeatherData()]).then((data) => {
         // 天气
