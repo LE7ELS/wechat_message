@@ -3,7 +3,7 @@ const params = {
     appid: "wxe6e8431df7080211",
     secret: "6ce5e2d439bb821dc5ba439c59a66b9f",
     // touser: "oaZR-6az0Jeuhd9RL6VF08FhRdjU",
-    template_id: "clsVXcUq647NeCx9IWyf4C52pUlrbceXEfT0qNxeP7E",
+    template_id: "je-w23k1YSr02KsHIFgAJEnp3sSurnZcU8qV6PSxPoM",
 };
 
 // 纪念日
@@ -32,7 +32,10 @@ const listConfig = {
     loveDay: {
         value: "",
     },
-    birthday: {
+    birthday1: {
+        value: "",
+    },
+    birthday2: {
         value: "",
     },
     weather: {

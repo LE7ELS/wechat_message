@@ -10,28 +10,29 @@ const getAllDataAndSend = (param) => {
     let today = new Date();
     const weekDay = today.getDay();
     let todaystr = today.getFullYear() + "年" + (today.getMonth() + 1) + "月" + today.getDate() + "日";
-    listConfig.nowDate.value = `📅 今天是 ${todaystr} 星期${week[weekDay]}`;
+    listConfig.nowDate.value = `今天是 ${todaystr} 星期${week[weekDay]}`;
 
     // 纪念日
     let initMeet = new Date(DAYS.meet),
         meetDay = Math.floor((today - initMeet) / 1000 / 60 / 60 / 24);
-    listConfig.meetDay.value = `🙋‍♂️ 和臭宝相遇已经 ${meetDay} 天啦！`;
+    listConfig.meetDay.value = `和臭宝相遇已经 ${meetDay} 天啦！`;
     let initLove = new Date(DAYS.love),
         loveDay = Math.floor((today - initLove) / 1000 / 60 / 60 / 24);
-    listConfig.loveDay.value = `❤ 今天是我们在一起的第 ${loveDay} 天`;
+    listConfig.loveDay.value = `今天是我们在一起的第 ${loveDay} 天`;
     let herBday = bdayCountdown(DAYS.bday1),
         myBday = bdayCountdown(DAYS.bday2);
-    listConfig.birthday.value = `🎂 距离臭宝生日还有 ${herBday} 天\n🎂 距离JC生日还有 ${myBday} 天`;
+    listConfig.birthday1.value = `距离臭宝生日还有 ${herBday} 天`;
+    listConfig.birthday2.value = `距离JC生日还有 ${myBday} 天`;
 
     return Promise.all([getQuote(), getDailyEnglish(), getWeatherTips(), getWeatherData()]).then((data) => {
         // 天气
         const { WeatherText, Temperature, WindDirection } = data[3];
         let icon = getWeatherIcon(WeatherText);
-        listConfig.weather.value = `${icon} 深圳${WeatherText}，${WindDirection}，气温${Temperature.replace("/", "~")}\n👔 ${data[2]}`;
+        listConfig.weather.value = `深圳${WeatherText}，${WindDirection}，气温${Temperature.replace("/", "~")}\n👔 ${data[2]}`;
         // 每日一句英文（消息过长展示不全）
         // listConfig.english.value = `📝 每日英文\n🔤 ${data[1].content}\n🀄 ${data[1].note}`;
         // 语录
-        listConfig.txt.value = "✏️ " + data[0].text;
+        listConfig.txt.value = data[0].text;
         return sendMessage(param, listConfig);
     });
 };
