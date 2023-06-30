@@ -5,6 +5,13 @@ const { listConfig, DAYS } = require("../../src/config/config");
 const { getQuote, getDailyEnglish } = require("./getContent");
 const { getWeatherTips, getWeatherData, getWeatherIcon } = require("./getWeatherContent");
 const week = ["天", "一", "二", "三", "四", "五", "六"];
+const bdayQuotes = [
+    "愿你的生活常温暖，日子总是温暖又闪光。",
+    "愿每一岁都能奔走在自己的热爱里。",
+    "愿你星光灿烂，前途无忧。生日快乐哦~",
+    "愿你前进无坎坷，归来有星光。生日快乐~",
+];
+
 const getAllDataAndSend = (param) => {
     // 今日
     let today = new Date();
@@ -21,8 +28,9 @@ const getAllDataAndSend = (param) => {
     listConfig.loveDay.value = `今天是我们在一起的第 ${loveDay} 天`;
     let herBday = bdayCountdown(DAYS.bday1),
         myBday = bdayCountdown(DAYS.bday2);
-    listConfig.birthday1.value = `距离臭宝生日还有 ${herBday} 天`;
-    listConfig.birthday2.value = `距离JC生日还有 ${myBday} 天`;
+
+    listConfig.birthday1.value = herBday ? `距离臭宝生日还有 ${herBday} 天` : "亲爱的臭宝生日快乐~";
+    listConfig.birthday2.value = myBday ? `距离JC生日还有 ${myBday} 天` : "亲爱的JC生日快乐~";
 
     return Promise.all([getQuote(), getDailyEnglish(), getWeatherTips(), getWeatherData()]).then((data) => {
         // 天气
@@ -32,7 +40,10 @@ const getAllDataAndSend = (param) => {
         // 每日一句英文（消息过长展示不全）
         // listConfig.english.value = `📝 每日英文\n🔤 ${data[1].content}\n🀄 ${data[1].note}`;
         // 语录
-        listConfig.txt.value = data[0].text;
+        let index = Math.floor(Math.random() * 4),
+            bdayQuote = bdayQuotes[index];
+
+        listConfig.txt.value = herBday && myBday ? data[0].text : bdayQuote;
         return sendMessage(param, listConfig);
     });
 };
