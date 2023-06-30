@@ -13,8 +13,8 @@ const DAYS = {
     bday1: "1999/5/14", // 农历
     bday2: "1997/3/17", // 农历
 };
-// 每日文案（来自 ONE·一个）
-const QUOTE_URL = "https://apier.youngam.cn/essay/one";
+// 每日文案（来自 一言）
+const QUOTE_URL = "https://v1.hitokoto.cn/?c=d&c=e&c=f&c=g&c=j&min_length=8&max_length=20&encode=text";
 // 每日英文（来自 金山词霸）
 const ENGLISH_URL = "https://open.iciba.com/dsapi/";
 // 当地拼音，需要在下面的墨迹天气url确认

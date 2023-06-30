@@ -1,9 +1,7 @@
 var axios = require("axios");
-// var solarLunar = require("solarLunar");
-var solarLunar = require("../solarLunar");
 const { listConfig, DAYS } = require("../../src/config/config");
-const { getQuote, getDailyEnglish } = require("./getContent");
-const { getWeatherTips, getWeatherData, getWeatherIcon } = require("./getWeatherContent");
+const { getQuote, getDailyEnglish, getWeatherTips, getWeatherData, bdayCountdown } = require("./getContent");
+
 const week = ["天", "一", "二", "三", "四", "五", "六"];
 const bdayQuotes = [
     "愿你的生活常温暖，日子总是温暖又闪光。",
@@ -32,46 +30,20 @@ const getAllDataAndSend = (param) => {
     listConfig.birthday1.value = herBday ? `距离臭宝生日还有 ${herBday} 天` : "亲爱的臭宝生日快乐~";
     listConfig.birthday2.value = myBday ? `距离JC生日还有 ${myBday} 天` : "亲爱的JC生日快乐~";
 
-    return Promise.all([getQuote(), getDailyEnglish(), getWeatherTips(), getWeatherData()]).then((data) => {
+    return Promise.all([getQuote(), getDailyEnglish(), getWeatherTips(), getWeatherData()]).then(([quote, english, weatherTips, weatherInfo]) => {
         // 天气
-        const { WeatherText, Temperature, WindDirection } = data[3];
-        let icon = getWeatherIcon(WeatherText);
-        listConfig.weather.value = `深圳${WeatherText}，${WindDirection}，气温${Temperature.replace("/", "~")}\n👔 ${data[2]}`;
+        const { WeatherText, Temperature, WindDirection } = weatherInfo;
+        listConfig.weather.value = `深圳${WeatherText}，${WindDirection}，气温${Temperature.replace("/", "~")}\n👔 ${weatherTips}`;
         // 每日一句英文（消息过长展示不全）
-        // listConfig.english.value = `📝 每日英文\n🔤 ${data[1].content}\n🀄 ${data[1].note}`;
+        // listConfig.english.value = `📝 每日英文\n🔤 ${english.content}\n🀄 ${english.note}`;
         // 语录
         let index = Math.floor(Math.random() * 4),
             bdayQuote = bdayQuotes[index];
 
-        listConfig.txt.value = herBday && myBday ? data[0].text : bdayQuote;
+        listConfig.txt.value = herBday && myBday ? quote : bdayQuote;
         return sendMessage(param, listConfig);
     });
 };
-
-// 农历生日倒计时
-function bdayCountdown(bday, nextYear = 0) {
-    // 1. 农历转换
-    let thisBday = bday.split("/"),
-        thisYear = new Date().getFullYear() + nextYear;
-    // 替换为下一次生日所在年（今年或明年）
-    thisBday[0] = thisYear;
-
-    // 字符串数组转为 Number 数组，构造参数
-    const args = thisBday.map(Number);
-    // 转换为对应阳历，并组合字符串
-    let solarDays = solarLunar.lunar2solar(...args),
-        solarBday = [solarDays.cYear, solarDays.cMonth, solarDays.cDay].join("/"); // 下一次阳历生日
-    // 2. 时间差
-    let todayTime = new Date().getTime(),
-        bdTime = Date.parse(solarBday),
-        distance = bdTime - todayTime;
-    let day = Math.floor(distance / (24 * 3600 * 1000)) + 1;
-    if (day < 0) {
-        day = bdayCountdown(bday, 1);
-    }
-    // console.log("下次生日还有：", day);
-    return day;
-}
 
 function sendMessage(data, listConfig) {
     return axios.post("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + data.access_token, {

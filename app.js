@@ -26,7 +26,7 @@ async function start(userid) {
         .catch((err) => console.error("发送失败", err));
 }
 // 手动设置定时器发送给多个用户
-start("oaZR-6az0Jeuhd9RL6VF08FhRdjU");
+start("oaZR-6az0Jeuhd9RL6VF08FhRdjU"); // me~
 setTimeout(() => {
     start("oaZR-6VY41M9ySqRkyCRsjUwvuIo");
 }, 5000);
