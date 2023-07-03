@@ -1,6 +1,6 @@
 var axios = require("axios");
 const { listConfig, DAYS } = require("../../src/config/config");
-const { getQuote, getDailyEnglish, getWeatherTips, getWeatherData, bdayCountdown } = require("./getContent");
+const { getQuote, getDailyEnglish, getWeatherInfo, bdayCountdown } = require("./getContent");
 
 const week = ["天", "一", "二", "三", "四", "五", "六"];
 const bdayQuotes = [
@@ -30,10 +30,9 @@ const getAllDataAndSend = (param) => {
     listConfig.birthday1.value = herBday ? `距离臭宝生日还有 ${herBday} 天` : "亲爱的臭宝生日快乐~";
     listConfig.birthday2.value = myBday ? `距离JC生日还有 ${myBday} 天` : "亲爱的JC生日快乐~";
 
-    return Promise.all([getQuote(), getDailyEnglish(), getWeatherTips(), getWeatherData()]).then(([quote, english, weatherTips, weatherInfo]) => {
+    return Promise.all([getQuote(), getDailyEnglish(), getWeatherInfo()]).then(([quote, english, weatherInfo]) => {
         // 天气
-        const { WeatherText, Temperature, WindDirection } = weatherInfo;
-        listConfig.weather.value = `深圳${WeatherText}，${WindDirection}，气温${Temperature.replace("/", "~")}\n👔 ${weatherTips}`;
+        listConfig.weather.value = `深圳${weatherInfo.tips}`;
         // 每日一句英文（消息过长展示不全）
         // listConfig.english.value = `📝 每日英文\n🔤 ${english.content}\n🀄 ${english.note}`;
         // 语录

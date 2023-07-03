@@ -17,10 +17,10 @@ const DAYS = {
 const QUOTE_URL = "https://v1.hitokoto.cn/?c=d&c=e&c=f&c=g&c=j&min_length=8&max_length=20&encode=text";
 // 每日英文（来自 金山词霸）
 const ENGLISH_URL = "https://open.iciba.com/dsapi/";
-// 当地拼音，需要在下面的墨迹天气url确认
-const LOCAL = "guangdong/shenzhen";
-// 获取天气链接
-const WEATHER_URL = "https://tianqi.moji.com/weather/china/" + LOCAL;
+// 位置经纬度
+const LOCAL = "114.09,22.55"; // 深圳：22.55N, 144.09E
+// 彩云天气api
+const WEATHER_URL = `https://api.caiyunapp.com/v2.6/KGrToOq3qRcl9lbM/${LOCAL}/weather?alert=true&dailysteps=1&hourlysteps=24`
 
 const listConfig = {
     nowDate: {

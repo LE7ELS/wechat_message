@@ -1,73 +1,24 @@
 var axios = require("axios");
 var solarLunar = require("../solarLunar");
-const superagent = require("superagent"); //发送网络请求获取DOM
-const cheerio = require("cheerio"); //能够像Jquery一样方便获取DOM节点
 
 const { QUOTE_URL, ENGLISH_URL, WEATHER_URL } = require("../config/config");
 
 // 获取每日一句
 const getQuote = async () => {
-    let { data } = await axios({
-        url: QUOTE_URL,
-    });
+    let { data } = await axios({ url: QUOTE_URL });
     return data;
 };
 
 // 金山词霸每日英文
 const getDailyEnglish = async () => {
-    let { data } = await axios({
-        url: ENGLISH_URL,
-    });
+    let { data } = await axios({ url: ENGLISH_URL });
     return data;
 };
 
 // 获取天气提醒
-const getWeatherTips = () => {
-    let p = new Promise((resolve, reject) => {
-        superagent.get(WEATHER_URL).end((err, res) => {
-            if (err) {
-                reject(err);
-            }
-            let weatherTip = "";
-            let $ = cheerio.load(res.text);
-            $(".wea_tips").each((i, elem) => {
-                weatherTip = $(elem).find("em").text();
-            });
-            resolve(weatherTip);
-        });
-    });
-    return p;
-};
-
-// 获取天气预报
-const getWeatherData = () => {
-    let p = new Promise((resolve, reject) => {
-        superagent.get(WEATHER_URL).end((err, res) => {
-            if (err) {
-                reject(err);
-            }
-            let threeDaysData = [];
-            let $ = cheerio.load(res.text);
-            $(".forecast .days").each((i, elem) => {
-                const SingleDay = $(elem).find("li");
-                threeDaysData.push({
-                    WeatherImgUrl: $(SingleDay[1]).find("img").attr("src"),
-                    WeatherText: $(SingleDay[1])
-                        .text()
-                        .replace(/(^\s*)|(\s*$)/g, ""),
-                    Temperature: $(SingleDay[2])
-                        .text()
-                        .replace(/(^\s*)|(\s*$)/g, ""),
-                    WindDirection: $(SingleDay[3])
-                        .find("em")
-                        .text()
-                        .replace(/(^\s*)|(\s*$)/g, ""),
-                });
-            });
-            resolve(threeDaysData[0]);
-        });
-    });
-    return p;
+const getWeatherInfo = async () => {
+    let { data } = await axios({ url: WEATHER_URL });
+    return { tips: data.result.forecast_keypoint };
 };
 
 // 农历生日倒计时
@@ -97,7 +48,6 @@ const bdayCountdown = (bday, nextYear = 0) => {
 module.exports = {
     getQuote,
     getDailyEnglish,
-    getWeatherTips,
-    getWeatherData,
+    getWeatherInfo,
     bdayCountdown,
 };
