@@ -32,7 +32,7 @@ const getAllDataAndSend = (param) => {
 
     return Promise.all([getQuote(), getDailyEnglish(), getWeatherInfo()]).then(([quote, english, weatherInfo]) => {
         // 天气
-        listConfig.weather.value = `深圳${weatherInfo.tips}`;
+        listConfig.weather.value = `深圳天气：${weatherInfo.tips}`;
         // 每日一句英文（消息过长展示不全）
         // listConfig.english.value = `📝 每日英文\n🔤 ${english.content}\n🀄 ${english.note}`;
         // 语录
