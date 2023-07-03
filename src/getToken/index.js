@@ -6,33 +6,27 @@ const moment = require("moment");
 function getToken(params) {
     return new Promise((resolve, reject) => {
         const tokenFile = path.join(__dirname, "token.json");
-        fs.readFile(tokenFile, "utf-8", function (err, data) {
+        fs.readFile(tokenFile, "utf-8", (err, data) => {
             if (err) {
                 reject(err);
             } else {
                 if (data) {
                     const token = JSON.parse(data);
                     if (token.expires_in > moment().unix()) {
-                        resolve(token.access_token);
-                        return;
+                        return resolve(token.access_token);
                     }
                 }
-                const appid = params.appid;
-                const secret = params.secret;
+                const { appid, secret } = params;
                 axios
                     .get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`)
-                    .then((res) => {
-                        if (res.data && res.data.errcode) {
-                            reject(data);
-                            return;
+                    .then(({ data }) => {
+                        if (data && data.errcode) {
+                            return reject(data);
                         }
-                        resolve(res.data.access_token);
-                        const t = res.data;
-                        t.expires_in = t.expires_in + moment().unix() - 1200;
-                        fs.writeFile(tokenFile, JSON.stringify(t, "", "\t"), function (err) {
-                            if (err) {
-                                reject(err);
-                            }
+                        resolve(data.access_token);
+                        data.expires_in = data.expires_in + moment().unix() - 1200;
+                        fs.writeFile(tokenFile, JSON.stringify(data, "", "\t"), (e) => {
+                            e && reject(e);
                         });
                     })
                     .catch((err) => reject(err));

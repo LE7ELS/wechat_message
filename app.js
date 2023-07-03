@@ -12,10 +12,7 @@ async function start(userid) {
         process.exit(0);
     }
 
-    getAllDataAndSend({
-        ...params,
-        access_token,
-    })
+    getAllDataAndSend({ ...params, access_token })
         .then((res) => {
             if (res.data && res.data.errcode) {
                 console.error("发送失败", res.data);

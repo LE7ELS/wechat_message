@@ -20,33 +20,17 @@ const ENGLISH_URL = "https://open.iciba.com/dsapi/";
 // 位置经纬度
 const LOCAL = "114.09,22.55"; // 深圳：22.55N, 144.09E
 // 彩云天气api
-const WEATHER_URL = `https://api.caiyunapp.com/v2.6/KGrToOq3qRcl9lbM/${LOCAL}/weather?alert=true&dailysteps=1&hourlysteps=24`
+const WEATHER_URL = `https://api.caiyunapp.com/v2.6/KGrToOq3qRcl9lbM/${LOCAL}/weather?alert=true&dailysteps=1&hourlysteps=24`;
 
 const listConfig = {
-    nowDate: {
-        value: "",
-    },
-    meetDay: {
-        value: "",
-    },
-    loveDay: {
-        value: "",
-    },
-    birthday1: {
-        value: "",
-    },
-    birthday2: {
-        value: "",
-    },
-    weather: {
-        value: "",
-    },
-    english: {
-        value: "",
-    },
-    txt: {
-        value: "",
-    },
+    nowDate: { value: "" },
+    meetDay: { value: "" },
+    loveDay: { value: "" },
+    birthday1: { value: "" },
+    birthday2: { value: "" },
+    weather: { value: "" },
+    english: { value: "" },
+    txt: { value: "" },
 };
 
 module.exports = {
